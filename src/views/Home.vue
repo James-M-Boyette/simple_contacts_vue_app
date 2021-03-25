@@ -1,18 +1,35 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h3>{{ message }}</h3>
+    <h1>Your contacts, here!</h1>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+<style></style>
 
+<script>
+import axios from "axios";
 export default {
-  name: "Home",
-  components: {
-    HelloWorld,
+  data: function () {
+    return {
+      message: "Let's try and make a Vue Contacts app from scratch!",
+      contacts: [],
+    };
+  },
+  created: function () {
+    console.log("in created ...");
+    this.contactsIndex();
+  },
+  methods: {
+    contactsIndex: function () {
+      console.log("Our Contacts will be displayed ...");
+      axios.get("http://localhost:3000/api/contacts").then((response) => {
+        console.log(response.data);
+        this.contacts = response.data;
+      });
+    },
   },
 };
 </script>
+
+// We need to see if we can do an index action, first as a method, and then as an auto, using "created"
